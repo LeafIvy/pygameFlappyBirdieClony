@@ -1,15 +1,19 @@
 import pygame as pg
+import settings as s
+
 from sys import exit
+from player import Player
+
 
 pg.init()
 
-SCREEN_WIDTH = 800
-SCREEN_HEIGHT = 400
-screen = pg.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
+screen = pg.display.set_mode((s.SCREEN_WIDTH, s.SCREEN_HEIGHT))
 pg.display.set_caption("Flappy Birdie Copy")
 
 clock = pg.time.Clock()
-FPS = 60
+
+player = pg.sprite.GroupSingle()
+player.add(Player())
 
 while 1:
     for event in pg.event.get():
@@ -17,5 +21,8 @@ while 1:
             pg.quit()
             exit()
 
+    screen.fill(s.BG_COLOR)
+    player.draw(screen)
+
     pg.display.update()
-    clock.tick(FPS)
+    clock.tick(s.FPS)
