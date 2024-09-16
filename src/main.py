@@ -22,6 +22,7 @@ while 1:
             exit()
 
     screen.fill(s.BG_COLOR)
+    player.update()
     player.draw(screen)
 
     pg.display.update()
