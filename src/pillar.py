@@ -3,17 +3,23 @@ import settings as s
 
 
 class PillarHead(pg.sprite.Sprite):
-    def __init__(self):
+    def __init__(self, straight):
         super().__init__()
-
-        self.image = pg.transform.scale_by(pg.image.load('src/graphics/pillar/pillar_head.png').convert_alpha(), 3)
+        image = self.image = pg.transform.scale_by(pg.image.load('src/graphics/pillar/pillar_head.png').convert_alpha(), 3)
+        if straight: self.image = image
+        else: self.image = pg.transform.flip(image, False, True)
         self.rect = self.image.get_rect()
 
 
 class Pillar(pg.sprite.Sprite):
-    def __init__(self, head):
+    def __init__(self, head, straight):
         super().__init__()
-
-        self.image = pg.transform.scale_by(pg.image.load('src/graphics/pillar/pillar.png').convert_alpha(), 3)
-        self.rect = self.image.get_rect(x=head.rect.x, bottom=head.rect.top)
+        image = pg.transform.scale_by(pg.image.load('src/graphics/pillar/pillar.png').convert_alpha(), 3)
+        if straight:
+            self.image = image
+            self.rect = self.image.get_rect(x=head.rect.x, bottom=head.rect.top)
+        else:
+            self.image = pg.transform.flip(image, False, True)
+            self.rect = self.image.get_rect(x=head.rect.x, top=head.rect.bottom)
+        
         

@@ -4,20 +4,24 @@ import settings as s
 class Player(pg.sprite.Sprite):
     def __init__(self):
         super().__init__()
-
+        
         self.image = pg.transform.scale_by(pg.image.load("src\\graphics\\bird\\bird_stand.png").convert_alpha(), 3)
         self.image_clean = self.image.copy()
+        
         self.rect = self.image.get_rect()
         self.rect.centery = s.SCREEN_HEIGHT//2
         self.rect.left = self.rect.width * 1.5
 
+        self.hitbox = pg.Rect(0, 0, 30, 30)
+        self.hitbox.center = self.rect.center
+        
         self.gravity = 0
         self.degrees = 0
         self.images = {}
 
     def player_input(self):
         keys = pg.key.get_pressed()
-        if keys[pg.K_SPACE] and self.gravity >= -5:
+        if keys[pg.K_SPACE] and self.gravity >= -5 and self.hitbox.top >= 0:
             self.gravity = -10
 
     def animate(self):
@@ -31,7 +35,7 @@ class Player(pg.sprite.Sprite):
     
         self.image = self.images[self.degrees]
         self.rect = self.image.get_rect(center=self.rect.center)
-
+        self.hitbox.center = self.rect.center
 
     def update(self):
         self.gravity += 0.75
@@ -39,3 +43,6 @@ class Player(pg.sprite.Sprite):
         self.rect.y += self.gravity
         self.animate()
 
+    def reset(self):
+        self.rect.centery = s.SCREEN_HEIGHT//2
+        self.gravity = 0
