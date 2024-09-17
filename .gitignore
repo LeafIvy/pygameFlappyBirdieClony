@@ -1,5 +1,7 @@
 # created by virtualenv automatically
-venv/
-.idea/
+src/venv/
 src/__pycache__/
+src/dist
+src/build
+src/main.spec
 *.txt

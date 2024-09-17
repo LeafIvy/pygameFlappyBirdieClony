@@ -12,11 +12,12 @@ pg.init()
 screen = pg.display.set_mode((s.SCREEN_WIDTH, s.SCREEN_HEIGHT))
 screen_rect = screen.get_rect()
 pg.display.set_caption("Flappy Birdie Copy")
+pg.display.set_icon(pg.image.load('flappy_bird.ico').convert_alpha())
 
-bgmusic = pg.mixer.Sound('src/audio/bgm.mp3')
+bgmusic = pg.mixer.Sound('audio/bgm.mp3')
 bgmusic.play(-1)
-scored = pg.mixer.Sound('src/audio/score.wav')
-lost = pg.mixer.Sound('src/audio/lose.wav')
+scored = pg.mixer.Sound('audio/score.wav')
+lost = pg.mixer.Sound('audio/lose.wav')
 
 game_active = False
 first_out = False
@@ -32,7 +33,7 @@ def settings_screen():
 
 
 settings_button = Button(0, s.SCREEN_HEIGHT - 64, onClick=settings_screen)
-settings_button.make_msg(12, 1, pg.image.load('src/graphics/settings/settings.png').convert_alpha())
+settings_button.make_msg(12, 1, pg.image.load('graphics/settings/settings.png').convert_alpha())
 
 
 def play_clicked():

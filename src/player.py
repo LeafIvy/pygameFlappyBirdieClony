@@ -5,7 +5,7 @@ class Player(pg.sprite.Sprite):
     def __init__(self):
         super().__init__()
         
-        self.image = pg.transform.scale_by(pg.image.load("src\\graphics\\bird\\bird_stand.png").convert_alpha(), 3)
+        self.image = pg.transform.scale_by(pg.image.load("graphics\\bird\\bird_stand.png").convert_alpha(), 3)
         self.image_clean = self.image.copy()
         
         self.rect = self.image.get_rect()
