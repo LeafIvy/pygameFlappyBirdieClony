@@ -9,20 +9,18 @@ class Player(pg.sprite.Sprite):
         self.image_clean = self.image.copy()
         
         self.rect = self.image.get_rect()
-        self.rect.centery = s.SCREEN_HEIGHT//2
-        self.rect.left = self.rect.width * 1.5
+        self.reset()
 
         self.hitbox = pg.Rect(0, 0, 30, 30)
         self.hitbox.center = self.rect.center
         
-        self.gravity = 0
         self.degrees = 0
         self.images = {}
 
     def player_input(self):
         keys = pg.key.get_pressed()
         if keys[pg.K_SPACE] and self.gravity >= -5 and self.hitbox.top >= 0:
-            self.gravity = -10
+            self.gravity = -8
 
     def animate(self):
         if self.gravity < 0:
@@ -44,5 +42,6 @@ class Player(pg.sprite.Sprite):
         self.animate()
 
     def reset(self):
-        self.rect.centery = s.SCREEN_HEIGHT//2
+        self.rect.centery = s.SCREEN_HEIGHT//4
+        self.rect.left = self.rect.width * 1.5
         self.gravity = 0

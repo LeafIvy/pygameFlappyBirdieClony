@@ -5,9 +5,14 @@ import settings as s
 class PillarHead(pg.sprite.Sprite):
     def __init__(self, straight):
         super().__init__()
+        self.passed = False
         image = self.image = pg.transform.scale_by(pg.image.load('src/graphics/pillar/pillar_head.png').convert_alpha(), 3)
-        if straight: self.image = image
-        else: self.image = pg.transform.flip(image, False, True)
+        if straight:
+            self.image = image
+            self.straight = True
+        else:
+            self.image = pg.transform.flip(image, False, True)
+            self.straight = False
         self.rect = self.image.get_rect()
 
 
