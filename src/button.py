@@ -14,20 +14,28 @@ class Button:
         self.onClick = onClick
         self.color = buttonColor
         self.showpadding = showpadding
+        self.hasimage = False
+        self.click = True
 
     def make_msg(self, msg, color, image=None):
-        if image: self.image = image
+        if image:
+            self.hasimage = True
+            self.image = image
         else: self.image = self.font.render(msg, True, color)
         self.rect = self.image.get_rect(x=self.x, y=self.y)
 
     def draw(self, screen):
         if self.color != 'nocolor': pg.draw.rect(screen, self.color, self.rect)
-        screen.blit(self.image, (self.rect.centerx-self.size[0]/2, self.rect.centery-self.size[1]/2))
+        if self.hasimage: screen.blit(self.image, self.rect)
+        else: screen.blit(self.image, (self.rect.centerx-self.size[0]/2, self.rect.centery-self.size[1]/2))
         if self.showpadding: pg.draw.rect(screen, 'black', self.rect, 5)
 
     def clicked(self):
-        if self.onClick != None:
-            mouse_button = pg.mouse.get_pressed()
-            mouse_pos = pg.mouse.get_pos()
-            if mouse_button[0] and self.rect.collidepoint(mouse_pos): self.onClick()
+        mouse_pos = pg.mouse.get_pos()
+        left_click = pg.mouse.get_pressed()[0]
+        if self.click and (left_click and self.rect.collidepoint(mouse_pos)):
+            self.onClick()
+            self.click = False
+        if not left_click: self.click = True
+        
         

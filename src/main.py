@@ -6,13 +6,14 @@ from sys import exit
 from player import Player
 from pillar import *
 from button import Button
+from music_slider import MusicSlider
 
 pg.init()
 
 screen = pg.display.set_mode((s.SCREEN_WIDTH, s.SCREEN_HEIGHT))
 screen_rect = screen.get_rect()
 pg.display.set_caption("Flappy Birdie Copy")
-pg.display.set_icon(pg.image.load('flappy_bird.ico').convert_alpha())
+pg.display.set_icon(pg.image.load('flappy_bird.png').convert_alpha())
 
 bgmusic = pg.mixer.Sound('audio/bgm.mp3')
 bgmusic.play(-1)
@@ -29,7 +30,10 @@ player.add(Player())
 
 
 def settings_screen():
-    pass
+    print("HI")
+    global show_sliders
+    if show_sliders: show_sliders = False
+    else: show_sliders = True
 
 
 settings_button = Button(0, s.SCREEN_HEIGHT - 64, onClick=settings_screen)
@@ -108,7 +112,14 @@ except FileNotFoundError:
     with open('highscore.txt', 'w') as f:
         f.write(str(highscore))
 highscore_surf = Button(s.SCREEN_WIDTH/2, 0, f'HIGHSCORE: {highscore}', None, 50, 'gold', 'nocolor', 10, False, None)
-print(highscore)
+
+info_font = pg.font.Font(None, 23)
+
+show_sliders = False
+bgm_slider = MusicSlider(10, s.SCREEN_HEIGHT - 100, 100, 'yellow', bgmusic)
+scored_slider = MusicSlider(10, s.SCREEN_HEIGHT - 150, 100, 'yellow', scored)
+lost_slider = MusicSlider(10, s.SCREEN_HEIGHT - 200, 100, 'yellow', lost)
+
 while 1:
     for event in pg.event.get():
         if event.type == pg.QUIT:
@@ -127,6 +138,7 @@ while 1:
             lost.play()
             first_out = True
         if screen_rect.colliderect(player.sprite.rect): player.draw(screen)
+
     else:
         if first_out:
             if screen_rect.colliderect(player.sprite.rect): player.draw(screen)
@@ -141,11 +153,31 @@ while 1:
         highscore_surf.make_msg(highscore_surf.message, highscore_surf.textColor)
         highscore_surf.draw(screen)
 
-    score_surf.message = f'SCORE: {score}'
-    score_surf.make_msg(score_surf.message, score_surf.textColor)
-    score_surf.draw(screen)
+        score_surf.message = f'SCORE: {score}'
+        score_surf.make_msg(score_surf.message, score_surf.textColor)
+        score_surf.draw(screen)
 
-    settings_button.draw(screen)
+        settings_button.draw(screen)
+        settings_button.clicked()
+
+        if show_sliders:
+            bgm_slider.draw(screen)
+            bgm_slider.update()
+            bgmusic.set_volume(bgm_slider.get_volume())
+            bgm_text= info_font.render("BACKGROUND MUSIC: {}%".format(int(bgmusic.get_volume()*100)), True, 'black')
+            screen.blit(bgm_text, (bgm_slider.slider.right + 10, bgm_slider.slider.y))
+
+            scored_slider.draw(screen)
+            scored_slider.update()
+            scored.set_volume(scored_slider.get_volume())
+            scored_text= info_font.render("SCORING MUSIC: {}%".format(int(scored.get_volume()*100)), True, 'black')
+            screen.blit(scored_text, (scored_slider.slider.right + 10, scored_slider.slider.y))
+
+            lost_slider.draw(screen)
+            lost_slider.update()
+            lost.set_volume(lost_slider.get_volume())
+            lost_text= info_font.render("GAME OVER MUSIC: {}%".format(int(lost.get_volume()*100)), True, 'black')
+            screen.blit(lost_text, (lost_slider.slider.right + 10, lost_slider.slider.y))    
     
     pg.display.update()
     clock.tick(s.FPS)
