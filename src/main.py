@@ -13,7 +13,7 @@ pg.init()
 screen = pg.display.set_mode((s.SCREEN_WIDTH, s.SCREEN_HEIGHT))
 screen_rect = screen.get_rect()
 pg.display.set_caption("Flappy Birdie Copy")
-pg.display.set_icon(pg.image.load('flappy_bird.png').convert_alpha())
+pg.display.set_icon(pg.image.load('graphics/bird/bird_stand.png').convert_alpha())
 
 bgmusic = pg.mixer.Sound('audio/bgm.mp3')
 bgmusic.play(-1)
