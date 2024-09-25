@@ -22,7 +22,6 @@ class MusicSlider:
 
     def update(self):
         self.user_input()
-        
 
     def get_volume(self):
         return (self.handle.centerx - self.slider.x) / self.slider.width

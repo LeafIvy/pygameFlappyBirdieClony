@@ -16,9 +16,12 @@ pg.display.set_caption("Flappy Birdie Copy")
 pg.display.set_icon(pg.image.load('graphics/bird/bird_stand.png').convert_alpha())
 
 bgmusic = pg.mixer.Sound('audio/bgm.mp3')
+bgmusic.set_volume(0.25)
 bgmusic.play(-1)
 scored = pg.mixer.Sound('audio/score.wav')
+scored.set_volume(0.25)
 lost = pg.mixer.Sound('audio/lose.wav')
+lost.set_volume(0.15)
 
 game_active = False
 first_out = False
@@ -30,7 +33,6 @@ player.add(Player())
 
 
 def settings_screen():
-    print("HI")
     global show_sliders
     if show_sliders: show_sliders = False
     else: show_sliders = True

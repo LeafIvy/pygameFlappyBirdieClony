@@ -19,7 +19,7 @@ class Player(pg.sprite.Sprite):
     def player_input(self):
         keys = pg.key.get_pressed()
         if keys[pg.K_SPACE] and self.gravity >= -5 and self.hitbox.top >= 0:
-            self.gravity = -8
+            self.gravity = -6
 
     def animate(self):
         if self.gravity < 0:
