@@ -56,7 +56,7 @@ score_surf = Button(0, 0, f'SCORE: {score}', None, 50, 'gold', 'nocolor', 10, Fa
 
 pillars = pg.sprite.Group()
 PILLAR = pg.USEREVENT + 1
-pg.time.set_timer(PILLAR, 750)
+pg.time.set_timer(PILLAR, 1000)
 
 
 def create_pillars():
@@ -132,6 +132,7 @@ while 1:
     pillar_update()
     pillars.draw(screen)
     if game_active:
+        show_sliders = False
         player.update()
         game_active = check_collision()
         if not game_active:
@@ -153,10 +154,6 @@ while 1:
         highscore_surf.make_msg(highscore_surf.message, highscore_surf.textColor)
         highscore_surf.draw(screen)
 
-        score_surf.message = f'SCORE: {score}'
-        score_surf.make_msg(score_surf.message, score_surf.textColor)
-        score_surf.draw(screen)
-
         settings_button.draw(screen)
         settings_button.clicked()
 
@@ -164,20 +161,24 @@ while 1:
             bgm_slider.draw(screen)
             bgm_slider.update()
             bgmusic.set_volume(bgm_slider.get_volume())
-            bgm_text= info_font.render("BACKGROUND MUSIC: {}%".format(int(bgmusic.get_volume()*100)), True, 'black')
+            bgm_text = info_font.render("BACKGROUND MUSIC: {}%".format(int(bgmusic.get_volume()*100)), True, 'black')
             screen.blit(bgm_text, (bgm_slider.slider.right + 10, bgm_slider.slider.y))
 
             scored_slider.draw(screen)
             scored_slider.update()
             scored.set_volume(scored_slider.get_volume())
-            scored_text= info_font.render("SCORING MUSIC: {}%".format(int(scored.get_volume()*100)), True, 'black')
+            scored_text = info_font.render("SCORING MUSIC: {}%".format(int(scored.get_volume()*100)), True, 'black')
             screen.blit(scored_text, (scored_slider.slider.right + 10, scored_slider.slider.y))
 
             lost_slider.draw(screen)
             lost_slider.update()
             lost.set_volume(lost_slider.get_volume())
-            lost_text= info_font.render("GAME OVER MUSIC: {}%".format(int(lost.get_volume()*100)), True, 'black')
-            screen.blit(lost_text, (lost_slider.slider.right + 10, lost_slider.slider.y))    
+            lost_text = info_font.render("GAME OVER MUSIC: {}%".format(int(lost.get_volume()*100)), True, 'black')
+            screen.blit(lost_text, (lost_slider.slider.right + 10, lost_slider.slider.y))
+
+    score_surf.message = f'SCORE: {score}'
+    score_surf.make_msg(score_surf.message, score_surf.textColor)
+    score_surf.draw(screen)
     
     pg.display.update()
     clock.tick(s.FPS)

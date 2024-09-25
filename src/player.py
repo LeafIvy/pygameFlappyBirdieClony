@@ -4,14 +4,13 @@ import settings as s
 class Player(pg.sprite.Sprite):
     def __init__(self):
         super().__init__()
-        
-        self.image = pg.transform.scale_by(pg.image.load("graphics\\bird\\bird_stand.png").convert_alpha(), 3)
+        self.image = pg.transform.scale2x(pg.image.load("graphics\\bird\\bird_stand.png").convert_alpha())
         self.image_clean = self.image.copy()
         
         self.rect = self.image.get_rect()
         self.reset()
 
-        self.hitbox = pg.Rect(0, 0, 30, 30)
+        self.hitbox = pg.Rect(0, 0, 25, 25)
         self.hitbox.center = self.rect.center
         
         self.degrees = 0
